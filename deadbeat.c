@@ -40,9 +40,12 @@ int main(int argc, char**argv){
 
     //initialize program counter
     //chip 8 starts at 0x200
-    int pc = 0x200;
 
-    printf("%4s %2s %2s", "PC", "C1", "C2\n");
+    //we skip ahead then read backwards
+    int pc = 0x200;
+    
+
+    printf("%4s %2s %2s", "PC", "C0", "C1\n");
     while (pc < fsize+0x200){
 
         //go through each line and assign information to each instruction

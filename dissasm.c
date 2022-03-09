@@ -21,7 +21,9 @@
 /*
 Big endian so
 
-__ is instruction, then followed
+PC C1 C2
+
+
 
 */
 
@@ -36,6 +38,10 @@ void Disassemble(unsigned char *codebuffer, int pc){
     printf("%04x %02x %02x ", pc, code[0], code[1]);
     printf(" - ");
 
+
+    //big endian
+    //bit shifting 6XNN >>4 gives you 0x06
+
     switch(firstNib){
         case 0x00: printf("0 not handled yet"); break;    
         case 0x01: printf("1 not handled yet"); break;    
@@ -43,10 +49,12 @@ void Disassemble(unsigned char *codebuffer, int pc){
         case 0x03: printf("3 not handled yet"); break;    
         case 0x04: printf("4 not handled yet"); break;    
         case 0x05: printf("5 not handled yet"); break;    
-        case 0x06:    
+        case 0x06: //Sets VX reg to NN   
             {    
-                unsigned char reg = code[0] & 0x0f;    
-                printf("%-10s V%01X,#$%02x", "MVI", reg, code[1]);
+                unsigned char reg = code[0] & 0x0f;
+                //AND with 00001111 to get the upper nibble
+                //https://stackoverflow.com/questions/12989969/what-does-0x0f-mean-and-what-does-this-code-mean#12990007
+                printf("%5s V%01X,#$%02x", "MVI", reg, code[1]);
                      
             }    
             break;    
@@ -56,7 +64,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
         case 0x0a:    
             {    
                 unsigned char addresshi = code[0] & 0x0f;    
-                printf("%-10s I,#$%01x%02x", "MVI", addresshi, code[1]);
+                printf("%5s I,#$%01x%02x", "MVI", addresshi, code[1]);
                  
             }    
             break;    
