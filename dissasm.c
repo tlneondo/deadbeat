@@ -44,8 +44,20 @@ void Disassemble(unsigned char *codebuffer, int pc){
 
     switch(firstNib){
         case 0x00: printf("0 not handled yet"); break;    
-        case 0x01: printf("1 not handled yet"); break;    
-        case 0x02: printf("2 not handled yet"); break;    
+        case 0x01: //JUMP TO NNN ADDR
+            {
+                pc = code[0] & 0xf;
+                int pcsub = code[1];
+                printf("%5s $%x%x", "JMP", pc,pcsub);
+            }
+            break;    
+        case 0x02: //CALL subroutine 2NNN
+            {
+                pc = code[0] & 0xf;
+                int pcsub = code[1];
+                printf("%5s $%x%x", "CALL", pc,pcsub);
+            }
+            break;    
         case 0x03: printf("3 not handled yet"); break;    
         case 0x04: printf("4 not handled yet"); break;    
         case 0x05: printf("5 not handled yet"); break;    
@@ -68,7 +80,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
                  
             }    
             break;    
-        case 0x0b: printf("b not handled yet"); break;    
+        case 0x0b: printf("b not handled yet: JMP to Index : NNN + V0"); break;    
         case 0x0c: printf("c not handled yet"); break;    
         case 0x0d: printf("d not handled yet"); break;    
         case 0x0e: printf("e not handled yet"); break;    
