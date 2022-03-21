@@ -43,7 +43,11 @@ void Disassemble(unsigned char *codebuffer, int pc){
     //bit shifting 6XNN >>4 gives you 0x06
 
     switch(firstNib){
-        case 0x00: printf("0 not handled yet"); break;    
+        case 0x00: 
+            {
+                printf("0 not handled yet"); 
+            }
+            break;    
         case 0x01: //JUMP TO NNN ADDR
             {
                 pc = code[0] & 0xf;
@@ -58,9 +62,24 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 printf("%5s $%x%x", "CALL", pc,pcsub);
             }
             break;    
-        case 0x03: printf("3 not handled yet"); break;    
-        case 0x04: printf("4 not handled yet"); break;    
-        case 0x05: printf("5 not handled yet"); break;    
+        case 0x03: //Cond if(vx == NN) //if = Skip Next instruction //uses VX only
+            {
+                int NN = code[0] & 0xf;
+                printf("JMP if vx == %d", NN); 
+            }
+            break;    
+        case 0x04: // JMP if  vx != NN //uses VX only
+            {
+                int NN = code[0] & 0xf;                
+                printf("JMP if vx != %d", NN); 
+            }
+            break;    
+        case 0x05: //JMP if vx == vy // 5XY0 //compare registers
+            {
+                int NN = code[0] & 0xf;    
+                printf("5 not handled yet");    
+            }
+            break;
         case 0x06: //Sets VX reg to NN   
             {    
                 unsigned char reg = code[0] & 0x0f;
@@ -70,21 +89,59 @@ void Disassemble(unsigned char *codebuffer, int pc){
                      
             }    
             break;    
-        case 0x07: printf("7 not handled yet"); break;    
-        case 0x08: printf("8 not handled yet"); break;    
-        case 0x09: printf("9 not handled yet"); break;    
-        case 0x0a:    
+        case 0x07: //7XNN - Adds NN to VX (Carry Flag Not changed)
+            {
+                //get register to add into
+                unsigned char reg = (code[0] & 0x0f);
+                int value = 0;
+                printf("%5s V%01X,#$%02x", "ADD", reg, code[1]);
+            }
+            break; 
+        case 0x08: // 9 Cases
+            {
+                printf("8 not handled yet");    
+            }
+            break; 
+        case 0x09: //9xY0 -- If (Vx != Vy) Skips the next instruction if VX does not equal VY
+            {
+                unsigned char rega = (code[0] & 0x0f);
+                unsigned char regb = (code[0] & 0x0f);
+
+                  printf("%5s V%01X,#$%02x", "ADD", reg, code[1]);
+            }
+            break; 
+        case 0x0a: //ANNN - MEM Set I to the Addr NNN
             {    
                 unsigned char addresshi = code[0] & 0x0f;    
                 printf("%5s I,#$%01x%02x", "MVI", addresshi, code[1]);
                  
             }    
             break;    
-        case 0x0b: printf("b not handled yet: JMP to Index : NNN + V0"); break;    
-        case 0x0c: printf("c not handled yet"); break;    
-        case 0x0d: printf("d not handled yet"); break;    
-        case 0x0e: printf("e not handled yet"); break;    
-        case 0x0f: printf("f not handled yet"); break;    
+        case 0x0b: //BNNN - JMP to Index : NNN + V0
+            {
+                printf("b not handled yet");
+            }
+            break;
+        case 0x0c: //CXNN Rand - Vx = rand() & NN -- Set Vx to the bit& of random number and NN
+            {
+                printf("c not handled yet");
+            }
+            break;  
+        case 0x0d: //display DXYN - Draw (Vx,Vy, N)
+            {
+                printf("d not handled yet");
+            }
+            break;
+        case 0x0e:
+            {
+                printf("e not handled yet");
+            }
+            break;    
+        case 0x0f:
+            {
+                printf("f not handled yet");
+            }
+            break;
     }
 
     
