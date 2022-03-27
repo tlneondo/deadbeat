@@ -22,9 +22,6 @@
 Big endian so
 
 PC C1 C2
-
-
-
 */
 
 
@@ -103,16 +100,19 @@ void Disassemble(unsigned char *codebuffer, int pc){
             }
             break; 
         case 0x09: //9xY0 -- If (Vx != Vy) Skips the next instruction if VX does not equal VY
+        //get x
+        //get y
+        //skip 0
             {
                 unsigned char rega = (code[0] & 0x0f);
-                unsigned char regb = (code[0] & 0x0f);
+                unsigned char regb = ((code[1] >> 4) & 0x0f);
 
-                  printf("%5s V%01X,#$%02x", "ADD", reg, code[1]);
+                  printf("%5s V%01d V%d", "CND", rega, regb);
             }
             break; 
         case 0x0a: //ANNN - MEM Set I to the Addr NNN
             {    
-                unsigned char addresshi = code[0] & 0x0f;    
+                unsigned char addresshi = code[0] & 0x0f;
                 printf("%5s I,#$%01x%02x", "MVI", addresshi, code[1]);
                  
             }    
