@@ -119,7 +119,13 @@ void Disassemble(unsigned char *codebuffer, int pc){
             break;    
         case 0x0b: //BNNN - JMP to Index : NNN + V0
             {
-                printf("b not handled yet");
+                unsigned char jmpOffseta = ( (code[0] & 0x0f));
+                unsigned char jmpOffsetb = (code[1]);
+                unsigned char * addressJMP = malloc(sizeof(unsigned char) * 2);
+                *addressJMP &= jmpOffseta;
+                //*addressJMP = (addressJMP << 8);
+
+                printf("%5s PC + V0 + %x", "FLOW", jmpOffseta);
             }
             break;
         case 0x0c: //CXNN Rand - Vx = rand() & NN -- Set Vx to the bit& of random number and NN
