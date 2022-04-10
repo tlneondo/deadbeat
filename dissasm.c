@@ -180,12 +180,16 @@ void Disassemble(unsigned char *codebuffer, int pc){
             break;
         case 0x0c: //CXNN Rand - Vx = rand() & NN -- Set Vx to the bit& of random number and NN
             {
-                printf("c not handled yet");
+                unsigned char reg = ( (code[0] & 0x0f));
+                printf("%4s V%d", "RAND", reg);
             }
             break;  
-        case 0x0d: //display DXYN - Draw (Vx,Vy, N)
-            {
-                printf("d not handled yet");
+        case 0x0d: //display DXYN - Draw Sprite at (Vx,Vy, N), N is height of sprite
+            {             
+                unsigned char xCoor = code[0] & 0x0f;
+                unsigned char yCoor = (code[1] & 0xf0) >> 4;
+                unsigned char heightOfSprite = (code[1] & 0x0f);
+                printf("Draw Sprite at (%d,%d) with Height %d", xCoor, yCoor, heightOfSprite);
             }
             break;
         case 0x0e: // 2 cases
