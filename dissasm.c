@@ -33,7 +33,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
     unsigned char *code = &codebuffer[pc];
     unsigned char firstNib = (code[0] >> 4);
     unsigned char secNib = (code[1]);
-    printf("%04x %02x %02x ", pc, code[0], code[1]);
+    printf("%04x %02x %02x", pc, code[0], code[1]);
     printf(" - ");
 
 
@@ -49,11 +49,15 @@ void Disassemble(unsigned char *codebuffer, int pc){
                     {
                         printf("Display Clear - disp_clear() Call");
                     }
-
+                        break;
                     case 0xEE:
                     {
                         printf("Return");
                     }
+                        break;
+                    default:
+                        printf("%x %x ##########NotImplemented", firstNib, secNib);
+                        break;
                 }
             }
             break;    
@@ -61,14 +65,14 @@ void Disassemble(unsigned char *codebuffer, int pc){
             {
                 pc = code[0] & 0xf;
                 int pcsub = code[1];
-                printf("%5s $%x%x", "JMP", pc,pcsub);
+                printf("JMP,  $%x%x", pc,pcsub);
             }
             break;    
         case 0x02: //CALL subroutine 2NNN
             {
                 pc = code[0] & 0xf;
                 int pcsub = code[1];
-                printf("%5s $%x%x", "CALL", pc,pcsub);
+                printf("CALL,  $%x%x", pc,pcsub);
             }
             break;    
         case 0x03: //Cond if(vx == NN) //if = Skip Next instruction //uses VX only
@@ -94,7 +98,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 unsigned char reg = code[0] & 0x0f;
                 //AND with 00001111 to get the upper nibble
                 //https://stackoverflow.com/questions/12989969/what-does-0x0f-mean-and-what-does-this-code-mean#12990007
-                printf("%5s V%01X,#$%02x", "MVI", reg, code[1]);
+                printf("MVI,  V%01X,#$%02x", reg, code[1]);
                      
             }    
             break;    
@@ -103,7 +107,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 //get register to add into
                 unsigned char reg = (code[0] & 0x0f);
                 int value = 0;
-                printf("%5s V%01X,#$%02x", "ADD", reg, code[1]);
+                printf("ADD,  V%01X,#$%02x", reg, code[1]);
             }
             break; 
         case 0x08: // 9 Cases, involing X&Y registers
@@ -114,31 +118,31 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 switch(optionNum)
                 {
                     case 0x00: // set vx to value in vy
-                        printf("%6s - V%d to V%d", "Assign", regX, regY);
+                        printf("Assign,  - V%d to V%d", regX, regY);
                         break;
                     case 0x01: //vx = (VX | VY)
-                        printf("%6s - V%d = V%d OR V%d", "OR", regX, regX, regY);
+                        printf("OR,  - V%d = V%d OR V%d", regX, regX, regY);
                         break;                    
                     case 0x02: //vx = (VX & VY)
-                        printf("%6s - V%d = V%d AND V%d", "AND", regX, regX, regY);                    
+                        printf("AND,  - V%d = V%d AND V%d", regX, regX, regY);                    
                         break;
                     case 0x03: //vx = (VX XOR VY)
-                    printf("%6s - V%d = V%d XOR V%d", "XOR", regX, regX, regY);
+                    printf("XOR,  - V%d = V%d XOR V%d", regX, regX, regY);
                         break;
                     case 0x04: //VX += VY, VF set to 1 if carry
-                    printf("%s - V%d = V%d += V%d", "PLUSEQ - Const", regX, regX, regY);
+                    printf("PLUSEQ - Const,  - V%d = V%d += V%d", regX, regX, regY);
                         break;
                     case 0x05: //VX -= VY, VF = 0 when borrow, 1 when not
-                    printf("%s - V%d = V%d -= V%d", "MINUSEQ - Const", regX, regX, regY);
+                    printf("MINUSEQ - Const,  - V%d = V%d -= V%d", regX, regX, regY);
                         break;
                     case 0x06: //VX >>= 1, send LSB to VF, then shift VX right by 1
-                    printf("%s - V%d >> 1", "SHIFTRIGHT", regX);
+                    printf("SHIFTRIGHT,  - V%d >> 1", regX);
                         break;
                     case 0x07: //vx = Vy - Vx, VF = 0 when borrow, 1 if not
-                    printf("%s - V%d = V%d - V%d", "EQUALSDIFF", regX, regY, regX);                    
+                    printf("EQUALSDIFF,  - V%d = V%d - V%d", regX, regY, regX);                    
                         break;
                     case 0x0E: //Vx <<= 1, store MSB of VX in VF, then LShift VX by 1
-                        printf("%s - V%d >> 1", "SHIFTLEFT", regX);
+                        printf("SHIFTLEFT,  - V%d >> 1", regX);
                         break;
                 }
             }
@@ -151,7 +155,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 unsigned char rega = (code[0] & 0x0f);
                 unsigned char regb = ((code[1] >> 4) & 0x0f);
 
-                  printf("%5s V%01d V%d", "CND", rega, regb);
+                  printf("CND,  V%01d V%d", rega, regb);
             }
             break; 
         case 0x0a: //ANNN - MEM Set I to the Addr NNN
@@ -160,7 +164,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 unsigned int addr = 0;
                 addr |= (addresshi << 8);
                 addr |= code[1];
-                printf("%5s I,0x%02x", "MVI", addr);
+                printf("MVI,  I,0x%02x", addr);
                  
             }    
             break;    
@@ -175,13 +179,13 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 addrJMP |= (jmpOffseta << 8);
                 addrJMP |= jmpOffsetb;
 
-                printf("%4s PC = V0 + 0x%02x", "FLOW", addrJMP);
+                printf("FLOW,  PC = V0 + 0x%02x", addrJMP);
             }
             break;
         case 0x0c: //CXNN Rand - Vx = rand() & NN -- Set Vx to the bit& of random number and NN
             {
                 unsigned char reg = ( (code[0] & 0x0f));
-                printf("%4s V%d", "RAND", reg);
+                printf("RAND,  V%d", reg);
             }
             break;  
         case 0x0d: //display DXYN - Draw Sprite at (Vx,Vy, N), N is height of sprite
@@ -192,16 +196,97 @@ void Disassemble(unsigned char *codebuffer, int pc){
                 printf("Draw Sprite at (%d,%d) with Height %d", xCoor, yCoor, heightOfSprite);
             }
             break;
-        case 0x0e: // 2 cases
+        case 0x0e: // KeyOp - Skips based on key pressed
             {
-                printf("e not handled yet");
+                unsigned char reg = code[0] & 0x0f;
+                unsigned char option = (code[1] & 0xf0) >> 4;
+                switch(option)
+                {
+                    case 0x09: // skip if key in Vreg is pressed
+                    {
+                        printf("Skip if V%d contains _____ and is pressed", reg);
+                    }
+                        break;
+                    case 0x0A: // skip if key in Vreg is not pressed
+                    {
+                        printf("Skip if V%d contains _____ and is not pressed", reg);
+                    }
+                        break;
+                }
             }
             break;    
         case 0x0f: // 9 cases
             {
-                printf("f not handled yet");
+                unsigned char reg = code[0] & 0x0f;
+
+                switch(secNib)
+                {
+                    case 0x07: // set vx to value of delay timer
+                    {
+                        printf("Timer , V%d = get_delay()", reg);
+                    }
+                        break;
+                    case 0x0A: //wait for Key, store it in VX - Blocks execution
+                    {
+                        printf("KeyOp, V%d - get_key()", reg);
+                    }
+                        break;
+                    case 0x15: //set delay timer to Vx
+                    {
+                        printf("Timer , Set delay_timer(V%d)",reg);
+                    }
+                        break;
+                    case 0x18: //set sound timer
+                    {
+                        printf("Sound , Set sound_timer(V%d)",reg);
+                    }
+                        break;
+                    case 0x1E: //add VX to I, VF not changed
+                    {
+                        printf("I += V%d",reg);
+                    }
+                        break;
+                    case 0x29: // set I to location of sprite for characters
+                    {
+                        printf("I = sprite_addr[V%d]",reg);
+                    }
+                        break;
+                    case 0x33:
+                    /*
+                    Stores the binary-coded decimal representation of VX, with the most significant of three digits at the address in I, the middle digit at I plus 1, and the least significant digit at I plus 2. (In other words, take the decimal representation of VX, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.); 
+                    */
+                    {
+                        printf("MEM,  set_BCD(V%d)*(I+0) = BCD(3);  *(I+1) = BCD(2);  *(I+2) = BCD(1);",reg);
+                    }
+                        break;
+                    case 0x55:
+                    /*
+                    Stores from V0 to VX (including VX) in memory, starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified.[d]
+                    */                    
+                    {
+                        printf("MEM,  reg_dump(V%d, &I)",reg);
+                    }
+                        break;
+                    case 0x65:
+                    /*
+                    Fills from V0 to VX (including VX) with values from memory, starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified.[d] 
+                    */                    
+                    {
+                        printf("MEM,  reg_load(V%d, &I)",reg);
+                    }
+                        break;
+                }
+
+
+                             
+
             }
             break;
+
+        default:
+            printf("%x %x ##########NotImplemented", firstNib, secNib);
+            break;
+
     }
 
     
