@@ -16,12 +16,32 @@ opcode in the first nibble
 #include <stdlib.h>
 #include <stdio.h>
 #include "dissasm.c"
+#include "CPU.c"
+
+/*
+void runDissasm(unsigned char* buf, int fileSize){
+    //initialize program counter
+    //chip 8 starts at 0x200
+    //we skip ahead then read backwards
+    int pc = 0x200;
+    printf("%4s %2s %2s", "PC", "C0", "C1\n");
+    while (pc < fileSize+0x200){
+
+        //go through each line and assign information to each instruction
+        Disassemble(buf, pc);
+        //increment to next instruction
+        pc+=2;
+        printf("\n");
+    }
+}
+*/
+
+
 
 int main(int argc, char**argv){
 
     FILE *f= fopen(argv[1], "rb");    
-    if (f==NULL)    
-    {    
+    if (f==NULL){    
         printf("error: Couldn't open %s\n", argv[1]);    
         exit(1);    
     }    
@@ -37,31 +57,29 @@ int main(int argc, char**argv){
     //close buffer properly
     fread(fileInputBuffer +0x200, fsize, 1, f);    
     fclose(f); 
+    
+    //dissasm func
+    //runDissasm(fileInputBuffer, fsize);
 
+    CPUstate* ch8CPU = InitializeCPU();
 
-    runDissasm(fileInputBuffer, fsize);
+    EmulateCh8(fileInputBuffer, ch8CPU);
 
-
-}
-
-void runDissasm(unsigned char* buf, int fileSize){
 
     //initialize program counter
     //chip 8 starts at 0x200
-
     //we skip ahead then read backwards
     int pc = 0x200;
-
-    printf("%4s %2s %2s", "PC", "C0", "C1\n");
-    while (pc < fileSize+0x200){
+    ///printf("%4s %2s %2s", "PC", "C0", "C1\n");
+    while (pc < fsize+0x200){
 
         //go through each line and assign information to each instruction
-        Disassemble(buf, pc);
+        EmulateCh8(fileInputBuffer, ch8CPU);
         //increment to next instruction
         pc+=2;
         printf("\n");
-    }
+    }    
 
-
-
+    return 0;
+            
 }
