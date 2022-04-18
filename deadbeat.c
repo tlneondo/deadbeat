@@ -38,21 +38,30 @@ int main(int argc, char**argv){
     fread(fileInputBuffer +0x200, fsize, 1, f);    
     fclose(f); 
 
+
+    runDissasm(fileInputBuffer, fsize);
+
+
+}
+
+void runDissasm(unsigned char* buf, int fileSize){
+
     //initialize program counter
     //chip 8 starts at 0x200
 
     //we skip ahead then read backwards
     int pc = 0x200;
-    
 
     printf("%4s %2s %2s", "PC", "C0", "C1\n");
-    while (pc < fsize+0x200){
+    while (pc < fileSize+0x200){
 
         //go through each line and assign information to each instruction
-        Disassemble(fileInputBuffer, pc);
+        Disassemble(buf, pc);
         //increment to next instruction
         pc+=2;
         printf("\n");
     }
+
+
 
 }
