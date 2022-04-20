@@ -142,12 +142,34 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
                 }
                 break;
                 case 0x04:{ //add with carry
+                            //https://iq.opengenus.org/addition-using-bitwise-operations/
+                            //Carry = a & b
+                            //sum = a ^ b
+                            // uint8_t sum = 0;
+                            // uint8_t carry = 0;
 
+                            // do{
+
+                            //     carry = state->V[regX] & state->V[regY];
+                            //     sum = state->V[regX] ^ state->V[regY];
+
+                            //     state->V[regX] = sum;
+                            //     state->V[15] = (carry << 1);
+                                
+                            // }while(state->V[regY] != 0);
+
+                            //carry
+                            state->V[15] = state->V[regX] & state->V[regY];
+                            //sum
+                            state->V[regX] = state->V[regX] ^ state->V[regY];
                 }
                 break;
                 case 0x05:{ //subtract with borrow
 
-
+                            //borrow
+                            state->V[15] = ~(state->V[regX]) & state->V[regY];
+                            //sum
+                            state->V[regX] = state->V[regX] ^ state->V[regY];        
                 }
                 break;
                 case 0x06:{ //right shift, store in VF
