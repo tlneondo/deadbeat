@@ -143,33 +143,17 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
                 break;
                 case 0x04:{ //add with carry
                             //https://iq.opengenus.org/addition-using-bitwise-operations/
-                            //Carry = a & b
-                            //sum = a ^ b
-                            // uint8_t sum = 0;
-                            // uint8_t carry = 0;
-
-                            // do{
-
-                            //     carry = state->V[regX] & state->V[regY];
-                            //     sum = state->V[regX] ^ state->V[regY];
-
-                            //     state->V[regX] = sum;
-                            //     state->V[15] = (carry << 1);
-                                
-                            // }while(state->V[regY] != 0);
-
-                            //carry
-                            state->V[15] = state->V[regX] & state->V[regY];
-                            //sum
-                            state->V[regX] = state->V[regX] ^ state->V[regY];
+                    //carry
+                    state->V[15] = state->V[regX] & state->V[regY];
+                    //sum
+                    state->V[regX] = state->V[regX] ^ state->V[regY];
                 }
                 break;
                 case 0x05:{ //subtract with borrow
-
-                            //borrow
-                            state->V[15] = ~(state->V[regX]) & state->V[regY];
-                            //sum
-                            state->V[regX] = state->V[regX] ^ state->V[regY];        
+                    //borrow
+                    state->V[15] = ~(state->V[regX]) & state->V[regY];
+                    //difference
+                    state->V[regX] = state->V[regX] ^ state->V[regY];        
                 }
                 break;
                 case 0x06:{ //right shift, store in VF
@@ -177,20 +161,30 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
                     state->V[regX] >>= 1;
                 }
                 break;
-                case 0x07:{}
+                case 0x07:{ //Vx = Vy - Vx 	Sets VX to VY minus VX. VF is set to 0 when there's a borrow, and 1 when there is not. 
+                    state->V[15] = state->V[regY] & state->V[regX];
+                    state->V[regX] = state->V[regY] ^ state->V[regX];
+
+                }
                 break;
-                case 0x0E:{}
+                case 0x0E:{ //left shift, store MSB in vF
+                    state->V[15] = (state->V[regX] & 64) >> 7; //10000000 in bin
+                    state->V[regX] <<= 1;
+                }
                 break;
-                
-                
+            }
+        }
+        break;
+        case 0x09:{ //skip if vx != vy
 
+            uint8_t regX = (code[0] & 0x0f);
+            uint8_t regY = (code[1] >> 4);
 
-
+            if(state->V[regX] != state->V[regY]){
+                state->PC += 1;
             }
 
         }
-        break;
-        case 0x09:{}
         break;
         case 0x0a:{}
         break;
