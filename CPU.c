@@ -1,6 +1,7 @@
 #include <stdint.h>
 
 void disp_clear();
+void draw(uint8_t Vx, uint8_t Vy, uint8_t N);
 
 typedef struct CPUstate{
     //contains registers
@@ -32,9 +33,7 @@ CPUstate* InitializeCPU(void){
 }
 
 void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
-
     int opbytes = 2;
-
     unsigned char * code = &codebuffer[state->PC];
 
     //easy guide
@@ -46,9 +45,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
     ///firNibA|secNibA////firNibB|SecNibB
 
     switch(code[0] >> 4){
-
         case 0x00:{ //extras and display clears
-
             switch(code[1]){ //switch on whole second byte
             
                 case 0xE0:{ //display clear
@@ -70,7 +67,6 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         break;
         case 0x01:{ //JMP to
             uint8_t * dest = calloc(2, sizeof(uint8_t));
-
             dest[0] = (code[0] & 0x0f);
             dest[1] = code[1];
 
@@ -87,7 +83,6 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         }
         break;
         case 0x03:{ //Skip if VX = NN
-
             if(state->V[(code[0] & 0x0f)] == code[1]){
                 state->PC += 2;
             }
@@ -95,7 +90,6 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         }
         break;
         case 0x04:{ //Skip if VX != NN
-
            if(state->V[(code[0] & 0x0f)] != code[1]){
                 state->PC += 2;
             }        
@@ -103,12 +97,11 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         }
         break;
         case 0x05:{ //skip if VX & VY are equal
-
            if(state->V[(code[0] & 0x0f)] == state->V[code[1] >> 4]){
                 state->PC += 2;
             }        
 
-        }
+        }+
         break;
         case 0x06:{ //set VX to NN
             state->V[(code[0] & 0x0f)] = code[1];
@@ -119,7 +112,6 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         }
         break;
         case 0x08:{ //Operations on Two Registers
-
             uint8_t regX = (code[0] & 0x0f);
             uint8_t regY = (code[1] >> 4);
             uint8_t optionNum = (code[1] & 0x0f);
@@ -176,27 +168,117 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         }
         break;
         case 0x09:{ //skip if vx != vy
-
             uint8_t regX = (code[0] & 0x0f);
             uint8_t regY = (code[1] >> 4);
 
             if(state->V[regX] != state->V[regY]){
                 state->PC += 1;
             }
-
         }
         break;
-        case 0x0a:{}
+        case 0x0a:{ /// Set I to a memory address
+            uint8_t * dest = calloc(2, sizeof(uint8_t));
+            dest[0] = (code[0] & 0x0f);
+            dest[1] = code[1];
+
+            state->I = 0; //clear 
+            state->I |= *dest;  
+
+            free(dest);   
+        }
         break;
-        case 0x0b:{}
+        case 0x0b:{ //Jump to NNN + V0
+            uint8_t * dest = calloc(2, sizeof(uint8_t));
+            dest[0] = (code[0] & 0x0f);
+            dest[1] = code[1];
+            dest += state->V[0];
+
+            state->PC = 0; //clear 
+            state->PC |= *dest;  
+
+            free(dest);
+        }
         break;
-        case 0x0c:{}
+        case 0x0c:{ //Vx= rand() & NN
+            uint8_t regX = (code[0] & 0x0f);
+            state->V[regX] = code[1] & rand();
+        }
         break;
-        case 0x0d:{}
+        case 0x0d:{ //draw at XY, with height - push out to other function
+            uint8_t cordX = (code[0] & 0x0f);
+            uint8_t cordY = (code[1] >> 4);
+            uint8_t height = (code[1] & 0xf0);
+            draw(cordX, cordY,height);
+        }
         break;
-        case 0x0e:{}
+        case 0x0e:{
+            uint8_t reg = (code[0] & 0x0f);
+            switch(code[1]){ //switch on whole second byte
+                case 0x9E:{ //if(key() == Vx)
+                    if(state->V[reg] == getKey()){
+                        state->PC += 1;
+                    }
+                }
+                break;
+                case 0xA1:{ //if(key() != Vx)
+                    if(state->V[reg] != getKey()){
+                        state->PC += 1;
+                    }                
+                }
+                break;
+                default: {
+                }
+                break;
+            }
+        }
         break;
-        case 0x0f:{}
+        case 0x0f:{
+            uint8_t reg = (code[0] & 0x0f);
+            switch(code[1]){ //switch on whole second byte
+                case 0x07:{ // set reg to value of delay
+                    state->V[reg] = getDelay();
+                }
+                break;
+                case 0x0A:{ // getKey
+                    state->V[reg] = getKey();
+                }
+                break;
+                case 0x15:{ // set delay timer
+                    state->delay = state->V[reg];
+                }
+                break;
+                case 0x18:{ // set sound timer
+                    state->sound = state->V[reg];
+                }
+                break;
+                case 0x1E:{ // adds Vx to I, no change in VF
+                    state->I += state->V[reg];
+                }
+                break;
+                case 0x29:{ // I = sprite_addr[Vx]
+                    //dummied out for now
+                }
+                break;
+                case 0x33:{ // BCD storing in Vx
+                    //dummied out for now
+                }
+                break;
+                case 0x55:{ // dump V0-VX inclusive 
+                    //dummied out for now
+                }
+                break;
+                case 0x65:{ // load
+                    //dummied out for now
+                }
+                break;
+                default: {
+                }
+                break;
+            }            
+
+
+
+        }
         break;
         default:
         break;
@@ -214,4 +296,22 @@ void disp_clear(CPUstate * state){
 
 
     return;
+}
+
+void draw(uint8_t Vx, uint8_t Vy, uint8_t N){
+    return;
+}
+
+uint8_t getKey(){
+    //get key from stdin?
+    //turn into 8bit int
+    uint8_t inputKey;
+
+    return inputKey;
+}
+
+uint8_t getDelay(){
+    uint8_t delay;
+
+    return delay;
 }
