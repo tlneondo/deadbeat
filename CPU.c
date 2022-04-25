@@ -19,18 +19,13 @@ typedef struct CPUstate{
 
 }CPUstate;
 
-CPUstate* InitializeCPU(void){
+CPUstate* InitializeCPU(void);
+uint8_t getKey();
+uint8_t getDelay();
+void EmulateCh8(unsigned char * codebuffer, CPUstate * state);
+void disp_clear(CPUstate * state);
+void draw(uint8_t Vx, uint8_t Vy, uint8_t N);
 
-    //use calloc to avoid garbage data that malloc would give you
-    CPUstate* initState = calloc(sizeof(CPUstate),1);
-
-    initState->MEM = calloc(1024*4,1);
-    initState->screen = &(initState->MEM[0xF00]);
-    initState->SP = 0xEA0;
-    initState->PC = 0x200; //PC always starts at 0x200
-
-    return initState;
-}
 
 void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
     int opbytes = 2;
@@ -101,7 +96,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
                 state->PC += 2;
             }        
 
-        }+
+        }
         break;
         case 0x06:{ //set VX to NN
             state->V[(code[0] & 0x0f)] = code[1];
@@ -313,6 +308,19 @@ void disp_clear(CPUstate * state){
 
 void draw(uint8_t Vx, uint8_t Vy, uint8_t N){
     return;
+}
+
+CPUstate* InitializeCPU(void){
+
+    //use calloc to avoid garbage data that malloc would give you
+    CPUstate* initState = calloc(sizeof(CPUstate),1);
+
+    initState->MEM = calloc(1024*4,1);
+    initState->screen = &(initState->MEM[0xF00]);
+    initState->SP = 0xEA0;
+    initState->PC = 0x200; //PC always starts at 0x200
+
+    return initState;
 }
 
 uint8_t getKey(){
