@@ -40,6 +40,19 @@ void runDissasm(unsigned char* buf, int fileSize){
 
 int main(int argc, char**argv){
 
+    //default is run
+    //da for dissasemble
+
+    switch(argc){
+        case 0:
+        break;
+        default:
+        break;
+    }
+
+
+
+
     FILE *f= fopen(argv[1], "rb");    
     if (f==NULL){    
         printf("error: Couldn't open %s\n", argv[1]);    
@@ -62,22 +75,27 @@ int main(int argc, char**argv){
     //runDissasm(fileInputBuffer, fsize);
 
     CPUstate* ch8CPU = InitializeCPU();
-
-    EmulateCh8(fileInputBuffer, ch8CPU);
-
-
     //initialize program counter
     //chip 8 starts at 0x200
     //we skip ahead then read backwards
-    int pc = 0x200;
+    ch8CPU->PC = 0x200;
     ///printf("%4s %2s %2s", "PC", "C0", "C1\n");
-    while (pc < fsize+0x200){
+    while (ch8CPU->PC < fsize+0x200){
 
-        //go through each line and assign information to each instruction
+        //read input
+
+
+
+        //process current instruction
         EmulateCh8(fileInputBuffer, ch8CPU);
-        //increment to next instruction
-        pc+=2;
-        printf("\n");
+        //increment program counter
+        ch8CPU->PC += 2;
+
+        //decrement timers
+        decrementTimers(ch8CPU);
+
+
+
     }    
 
     return 0;

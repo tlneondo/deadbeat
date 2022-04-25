@@ -260,7 +260,20 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
                 }
                 break;
                 case 0x33:{ // BCD storing in Vx
-                    //dummied out for now
+                    /*BCD from http://emulator101.com/
+                        42 - 101010
+                        32 + 8 + 2
+                        Opcode FX33 converts the number in register X into 3 Binary-coded decimal (BCD) digits,storing them into the memory location pointed to by the I register. Humans like to read base-10 numbers, and this instruction is convenient to convert hex numbers to base-10 for display. Here is one possible way to do it
+                    */
+                    uint8_t ones, tens, hundreds;
+                    uint8_t value = state->V[reg];
+                    ones = value % 10;
+                    value = value / 10;
+                    tens = value % 10;
+                    hundreds = value / 10;
+                    state->MEM[state->I] = hundreds;
+                    state->MEM[state->I+1] = tens;
+                    state->MEM[state->I+2] = ones;
                 }
                 break;
                 case 0x55:{ // dump V0-VX inclusive 
@@ -314,4 +327,11 @@ uint8_t getDelay(){
     uint8_t delay;
 
     return delay;
+}
+
+uint8_t decrementTimers(CPUstate * state){
+    uint8_t status = 0;
+
+
+    return status;
 }

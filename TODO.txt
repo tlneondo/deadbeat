@@ -1,0 +1,10 @@
+Implement Timers and input
+Set up gameloop
+
+from: orangesnowfox on emudev disc
+read_input()
+run_instructions(n) # chip-8 has whatever clock rate you want to give it, I think I did something like 300hz
+decrement_timers()
+render()
+
+need to create process loop
