@@ -14,6 +14,7 @@ opcode in the first nibble
 */
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "dissasm.c"
 #include "CPU.c"
 
@@ -68,12 +69,34 @@ void runDissasm(romPack * inputRom){
 
 void runEmu(romPack * inputRom){
     CPUstate* ch8CPU = InitializeCPU();
+    
+    //set up global loop timer
+    struct timespec *startT = malloc(sizeof(struct timespec));
+    struct timespec *stopT = malloc(sizeof(struct timespec));
+    struct timespec *diffT = malloc(sizeof(struct timespec));
+    int startStatus, stopStatus, diffTStat;
+
+
+
+
+
     //initialize program counter
     //chip 8 starts at 0x200
     //we skip ahead then read backwards
+
     ch8CPU->PC = 0x200;
-    ///printf("%4s %2s %2s", "PC", "C0", "C1\n");
+
+
     while (ch8CPU->PC < inputRom->fSize +0x200){
+
+        //get initial timer if first loop
+        if(ch8CPU->PC == 0x200){
+            //get initial time
+            startStatus = clock_gettime(CLOCK_REALTIME, startT);            
+        }
+        
+        
+        
 
         //read input
 
@@ -84,8 +107,15 @@ void runEmu(romPack * inputRom){
         //increment program counter
         ch8CPU->PC += 2;
 
-        //decrement timers
-        decrementTimers(ch8CPU);
+
+
+        //get time at end of loop & find different between times
+        stopStatus = clock_gettime(CLOCK_REALTIME, stopT);
+        diffTStat = timerspecsub(stopT,startT,diffT);
+
+        //decrement timer by time passed
+        
+
     }        
 }
 
