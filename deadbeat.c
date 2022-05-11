@@ -76,6 +76,18 @@ void runEmu(romPack * inputRom){
     struct timespec *diffT = malloc(sizeof(struct timespec));
     int startStatus, stopStatus, diffTStat;
 
+    uint8_t sysRun = 1;
+
+
+    while(sysRun){ // creat new looop
+
+
+
+
+
+
+    }
+
 
 
 
