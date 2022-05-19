@@ -69,66 +69,13 @@ void runDissasm(romPack * inputRom){
 
 void runEmu(romPack * inputRom){
     CPUstate* ch8CPU = InitializeCPU();
-    
-    //set up global loop timer
-    struct timespec *startT = malloc(sizeof(struct timespec));
-    struct timespec *stopT = malloc(sizeof(struct timespec));
-    struct timespec *diffT = malloc(sizeof(struct timespec));
-    int startStatus, stopStatus, diffTStat;
-
-    uint8_t sysRun = 1;
-
-
-    while(sysRun){ // creat new looop
 
 
 
 
 
 
-    }
 
-
-
-
-
-    //initialize program counter
-    //chip 8 starts at 0x200
-    //we skip ahead then read backwards
-
-    ch8CPU->PC = 0x200;
-
-
-    while (ch8CPU->PC < inputRom->fSize +0x200){
-
-        //get initial timer if first loop
-        if(ch8CPU->PC == 0x200){
-            //get initial time
-            startStatus = clock_gettime(CLOCK_REALTIME, startT);            
-        }
-        
-        
-        
-
-        //read input
-
-
-
-        //process current instruction
-        EmulateCh8(inputRom->romData, ch8CPU);
-        //increment program counter
-        ch8CPU->PC += 2;
-
-
-
-        //get time at end of loop & find different between times
-        stopStatus = clock_gettime(CLOCK_REALTIME, stopT);
-        diffTStat = timerspecsub(stopT,startT,diffT);
-
-        //decrement timer by time passed
-        
-
-    }        
 }
 
 

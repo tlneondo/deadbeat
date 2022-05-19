@@ -17,8 +17,6 @@ typedef struct CPUstate{
     //display buffer at 0xF00 in ram
     //stack is at 0xEA0
 
-
-    //1.74 MHZ Clockspeed
     uint32_t clockSpeed;
 
 }CPUstate;
@@ -324,7 +322,7 @@ CPUstate* InitializeCPU(void){
     initState->SP = 0xEA0;
     initState->PC = 0x200; //PC always starts at 0x200
 
-     initState->clockSpeed = 1740000;
+    initState->clockSpeed = 480;
 
     return initState;
 }
