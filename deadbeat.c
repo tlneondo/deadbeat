@@ -69,13 +69,34 @@ void runDissasm(romPack * inputRom){
 
 void runEmu(romPack * inputRom){
     CPUstate* ch8CPU = InitializeCPU();
+    int emuRunning = 1;
+
+    while(emuRunning){
+        
+        //proces instruction
+        EmulateCh8(inputRom->romData, ch8CPU);
+
+        //check inputs
+
+        //update screen every 8 operations
+        if(ch8CPU->currentClockCnt == 8){
+            //update screen
+            ch8CPU->currentClockCnt = 0; //reset
+        }
+
+        //update timers
 
 
+        //iterate the program counter
+        ch8CPU->PC += 2;
 
-
-
-
-
+        //catch end of rom
+        if(ch8CPU->PC >= inputRom->fSize){
+            //end of rom
+            return;
+        }
+    }
+    return;
 }
 
 

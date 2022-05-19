@@ -18,6 +18,8 @@ typedef struct CPUstate{
     //stack is at 0xEA0
 
     uint32_t clockSpeed;
+    uint8_t currentClockCnt;
+    uint8_t perframeClockLimit;
 
 }CPUstate;
 
@@ -323,6 +325,9 @@ CPUstate* InitializeCPU(void){
     initState->PC = 0x200; //PC always starts at 0x200
 
     initState->clockSpeed = 480;
+
+    initState->currentClockCnt = 0;
+    initState->perframeClockLimit = 8;  
 
     return initState;
 }
