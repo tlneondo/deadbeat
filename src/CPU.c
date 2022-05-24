@@ -1,45 +1,15 @@
-#include <stdint.h>
 
-void disp_clear();
-void draw(uint8_t Vx, uint8_t Vy, uint8_t N);
-
-typedef struct CPUstate{
-    //contains registers
-    uint8_t V[15];
-    uint16_t I;
-    uint16_t SP; //stack point
-    uint16_t PC; //program counter
-    uint8_t delay;
-    uint8_t sound;
-    uint8_t *MEM;
-    uint8_t *screen;
-
-    //display buffer at 0xF00 in ram
-    //stack is at 0xEA0
-
-    uint32_t clockSpeed;
-    uint8_t currentClockCnt;
-    uint8_t perframeClockLimit;
-
-}CPUstate;
-
-CPUstate* InitializeCPU(void);
-uint8_t getKey();
-uint8_t getDelay();
-void EmulateCh8(unsigned char * codebuffer, CPUstate * state);
-void disp_clear(CPUstate * state);
-void draw(uint8_t Vx, uint8_t Vy, uint8_t N);
-
+#include "CPU.h"
 
 void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
-    int opbytes = 2;
+    //int opbytes = 2;
     unsigned char * code = &codebuffer[state->PC];
 
     //easy guide
-    unsigned char A = (code[0] >> 4); //first nibble of first byte - also the letter of the Opcode
-    unsigned char B = (code[0] & 0x0f);
-    unsigned char C = (code[1] >> 4);
-    unsigned char D = (code[1] & 0x0f);
+    //unsigned char A = (code[0] >> 4); //first nibble of first byte - also the letter of the Opcode
+    //unsigned char B = (code[0] & 0x0f);
+    //unsigned char C = (code[1] >> 4);
+    //unsigned char D = (code[1] & 0x0f);
 
     ///firNibA|secNibA////firNibB|SecNibB
 
@@ -335,13 +305,13 @@ CPUstate* InitializeCPU(void){
 uint8_t getKey(){
     //get key from stdin?
     //turn into 8bit int
-    uint8_t inputKey;
+    uint8_t inputKey = 0;
 
     return inputKey;
 }
 
 uint8_t getDelay(){
-    uint8_t delay;
+    uint8_t delay = 0;
 
     return delay;
 }

@@ -24,11 +24,12 @@ Big endian so
 PC C1 C2
 */
 
+#include "dissasm.h"
 
 void Disassemble(unsigned char *codebuffer, int pc){
 
     //size of opcode
-    int opbytes = 2;
+    //int opbytes = 2;
 
     unsigned char *code = &codebuffer[pc];
     unsigned char firstNib = (code[0] >> 4);
@@ -89,7 +90,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
             break;    
         case 0x05: //JMP if vx == vy // 5XY0 //compare registers
             {
-                int NN = code[0] & 0xf;    
+                //int NN = code[0] & 0xf;    
                 printf("5 not handled yet");    
             }
             break;
@@ -106,7 +107,7 @@ void Disassemble(unsigned char *codebuffer, int pc){
             {
                 //get register to add into
                 unsigned char reg = (code[0] & 0x0f);
-                int value = 0;
+                //int value = 0;
                 printf("ADD,  V%01X,#$%02x", reg, code[1]);
             }
             break; 

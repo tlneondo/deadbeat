@@ -15,8 +15,9 @@ opcode in the first nibble
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "dissasm.c"
-#include "CPU.c"
+#include "dissasm.h"
+#include "CPU.h"
+#include <SDL2/SDL.h>
 
 typedef struct romPack{
     unsigned char* romData;
@@ -48,7 +49,9 @@ romPack* openROM(char** argvIn){
 
     //close buffer properly
     fread(inRom->romData +0x200, inRom->fSize, 1, f);    
-    fclose(f); 
+    fclose(f);
+
+    return inRom;
 }
 
 void runDissasm(romPack * inputRom){
@@ -105,8 +108,28 @@ void runEmu(romPack * inputRom){
 //#################################################################
 //#################################################################
 
+#define SCREEN_SIZE_X 800
+#define SCREEN_SIZE_Y 600
+
 
 int main(int argc, char** argv){
+
+    //SDL SETUP
+    if(SDL_Init(SDL_INIT_EVERYTHING) != 0 ){
+        printf("Error Initializing SDL: %s\n", SDL_GetError());
+    }
+
+    SDL_Window* screen = SDL_CreateWindow("DeadBeat", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_SIZE_X, SCREEN_SIZE_Y, SDL_WINDOW_SHOWN);
+
+    if(!screen){
+
+        fprintf(stderr, "error creating window.\n");
+        return 2;
+    }
+
+
+
+
 
     //default is run
     //da for dissasemble
