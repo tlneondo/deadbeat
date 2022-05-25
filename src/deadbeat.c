@@ -74,7 +74,10 @@ void runEmu(romPack * inputRom){
     CPUstate* ch8CPU = InitializeCPU();
     int emuRunning = 1;
 
+    printf("Current PC Location: \n");
     while(emuRunning){
+
+        //printf("%x %d --  \n", ch8CPU->PC, ch8CPU->PC);
         
         //proces instruction
         EmulateCh8(inputRom->romData, ch8CPU);
@@ -92,12 +95,11 @@ void runEmu(romPack * inputRom){
 
         //iterate the program counter
         ch8CPU->PC += 2;
+        
+        char c;
+        scanf("%c",&c);
 
         //catch end of rom
-        if(ch8CPU->PC >= inputRom->fSize){
-            //end of rom
-            return;
-        }
     }
     return;
 }

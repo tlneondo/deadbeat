@@ -13,6 +13,8 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
 
     ///firNibA|secNibA////firNibB|SecNibB
 
+    printf("%04x %02x %02x", state->PC, code[0], code[1]);
+
     switch(code[0] >> 4){
         case 0x00:{ //extras and display clears
             switch(code[1]){ //switch on whole second byte

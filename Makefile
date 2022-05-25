@@ -4,7 +4,7 @@
 
 # Compiler settings - Can be customized.
 CC = gcc
-CXXFLAGS = -std=c11 -Wall
+CXXFLAGS = -std=c11 -Wall -g
 LDFLAGS = `sdl2-config --libs --cflags`
 
 # Makefile settings - Can be customized.
