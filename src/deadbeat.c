@@ -114,18 +114,18 @@ void runEmu(romPack * inputRom){
 
 int main(int argc, char** argv){
 
-    //SDL SETUP
-    if(SDL_Init(SDL_INIT_EVERYTHING) != 0 ){
-        printf("Error Initializing SDL: %s\n", SDL_GetError());
-    }
+    // //SDL SETUP
+    // if(SDL_Init(SDL_INIT_EVERYTHING) != 0 ){
+    //     printf("Error Initializing SDL: %s\n", SDL_GetError());
+    // }
 
-    SDL_Window* screen = SDL_CreateWindow("DeadBeat", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_SIZE_X, SCREEN_SIZE_Y, SDL_WINDOW_SHOWN);
+    // SDL_Window* screen = SDL_CreateWindow("DeadBeat", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_SIZE_X, SCREEN_SIZE_Y, SDL_WINDOW_SHOWN);
 
-    if(!screen){
+    // if(!screen){
 
-        fprintf(stderr, "error creating window.\n");
-        return 2;
-    }
+    //     fprintf(stderr, "error creating window.\n");
+    //     return 2;
+    // }
 
 
 
@@ -145,13 +145,13 @@ int main(int argc, char** argv){
             return -2;
         }
         break;
-        case 1:{ //run file
+        case 2:{ //run file
             romPack* inputRom;
             inputRom = openROM(argv);
             runEmu(inputRom);
         }
         break;   
-        case 2: { //run file with dissasm
+        case 3: { //run file with dissasm
             romPack* inputRom;
             inputRom = openROM(argv);
             runDissasm(inputRom);
