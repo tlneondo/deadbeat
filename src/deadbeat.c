@@ -73,9 +73,19 @@ void runDissasm(romPack * inputRom){
 void runEmu(romPack * inputRom){
     CPUstate* ch8CPU = InitializeCPU();
     int emuRunning = 1;
+    int endofRom = (inputRom->fSize + 0x200);
 
     printf("Current PC Location: \n");
     while(emuRunning){
+
+        //catch end of rom
+
+        if(ch8CPU->PC >= endofRom){
+            printf("Reached end of rom, press enter to restart \n");
+            char c;
+            scanf("%c",&c);
+            ch8CPU->PC = 0x200;
+        }        
 
         //printf("%x %d --  \n", ch8CPU->PC, ch8CPU->PC);
         
@@ -99,7 +109,7 @@ void runEmu(romPack * inputRom){
         char c;
         scanf("%c",&c);
 
-        //catch end of rom
+
     }
     return;
 }
