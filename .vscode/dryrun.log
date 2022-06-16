@@ -1,4 +1,10 @@
-make.exe --dry-run --always-make --keep-going --print-directory
-'make.exe' is not recognized as an internal or external command,
-operable program or batch file.
-
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/icyjiub/Documents/Projects/deadbeat/deadbeat'
+ 
+gcc -std=c11 -Wall -g -o obj/CPU.o -c src/CPU.c
+gcc -std=c11 -Wall -g -o obj/deadbeat.o -c src/deadbeat.c
+gcc -std=c11 -Wall -g -o obj/dissasm.o -c src/dissasm.c
+gcc -std=c11 -Wall -g -o obj/inputSys.o -c src/inputSys.c
+gcc -std=c11 -Wall -g -o deadbeat obj/CPU.o obj/deadbeat.o obj/dissasm.o obj/inputSys.o `sdl2-config --libs --cflags`
+make: Leaving directory '/home/icyjiub/Documents/Projects/deadbeat/deadbeat'
+ 

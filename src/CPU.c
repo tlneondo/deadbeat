@@ -36,13 +36,13 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
 
         }
         break;
-        case 0x01:{ //JMP to
+        case 0x01:{ //JMP to 39
             uint8_t * dest = calloc(2, sizeof(uint8_t));
             dest[0] = (code[0] & 0x0f);
             dest[1] = code[1];
 
             state->PC = 0; //clear 
-            state->PC |= *dest;  
+            state->PC = ((uint16_t) dest[0] << 8) | dest[1];
 
             free(dest);        
 
@@ -153,7 +153,8 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
             dest[1] = code[1];
 
             state->I = 0; //clear 
-            state->I |= *dest;  
+            state->I = ((uint16_t) dest[0] << 8) | dest[1];
+
 
             free(dest);   
         }
@@ -165,7 +166,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
             dest += state->V[0];
 
             state->PC = 0; //clear 
-            state->PC |= *dest;  
+            state->PC = ((uint16_t) dest[0] << 8) | dest[1]; 
 
             free(dest);
         }

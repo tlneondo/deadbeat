@@ -1,4 +1,500 @@
-make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
-'make.exe' is not recognized as an internal or external command,
-operable program or batch file.
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
 
+# Make data base, printed on Wed Jun 15 20:54:37 2022
+
+# Variables
+
+# makefile (from 'Makefile', line 18)
+OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+NO_AT_BRIDGE = 1
+# makefile (from 'Makefile', line 17)
+SRC = $(wildcard $(SRCDIR)/*$(EXT))
+# makefile (from 'Makefile', line 12)
+EXT = .c
+# makefile (from 'Makefile', line 26)
+WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
+# environment
+GTK_RC_FILES = /etc/gtk/gtkrc:/home/icyjiub/.gtkrc:/home/icyjiub/.config/gtkrc
+# makefile (from 'Makefile', line 14)
+OBJDIR = obj
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-eae91652-b2e8-4e7a-a828-92b06d999967.sock
+# environment
+LC_NAME = en_US.UTF-8
+# environment
+LC_NUMERIC = en_US.UTF-8
+# environment
+VSCODE_CWD = /home/icyjiub
+# makefile (from 'Makefile', line 22)
+DELOBJ = $(OBJ)
+# environment
+LC_ADDRESS = en_US.UTF-8
+# default
+MAKE_COMMAND := make
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+GDK_DPI_SCALE = 1
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/icyjiub/Documents/Projects/deadbeat/deadbeat
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+MAIL = /var/spool/mail/icyjiub
+# environment
+XDG_DATA_DIRS = /home/icyjiub/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+# environment
+OLDPWD = /home/icyjiub
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+VSCODE_LOG_STACK = false
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/icyjiub/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+# environment
+LANG = C
+# environment
+XAUTHORITY = /run/user/1000/xauth_gVlaxg
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# environment
+PLASMA_USE_QT_SCALING = 1
+# makefile (from 'Makefile', line 19)
+DEP = $(OBJ:$(OBJDIR)/%.o=%.d)
+# makefile
+CURDIR := /home/icyjiub/Documents/Projects/deadbeat/deadbeat
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+PAM_KWALLET5_LOGIN = /run/user/1000/kwallet5.socket
+# environment
+MFLAGS = -pqrR
+# default
+.SHELLFLAGS := -c
+# environment
+WAYLAND_DISPLAY = wayland-0
+# environment
+XDG_CONFIG_DIRS = /home/icyjiub/.config/kdedefaults:/etc/xdg
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+XCURSOR_THEME = breeze_cursors
+# environment
+XDG_SESSION_DESKTOP = KDE
+# makefile (from 'inputSys.d', line 1)
+MAKEFILE_LIST := Makefile CPU.d deadbeat.d dissasm.d inputSys.d
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 14741
+# environment
+XDG_SESSION_TYPE = wayland
+# makefile (from 'Makefile', line 11)
+APPNAME = deadbeat
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+SESSION_MANAGER = local/icyjiub-Desktop:@/tmp/.ICE-unix/1185,unix/icyjiub-Desktop:/tmp/.ICE-unix/1185
+# automatic
+*F = $(notdir $*)
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+DOTNET_BUNDLE_EXTRACT_BASE_DIR = /home/icyjiub/.cache/dotnet_bundle_extract
+# environment
+SHLVL = 1
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /usr/local/sbin:/usr/local/bin:/usr/bin:/home/icyjiub/.dotnet/tools:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+# default
+MAKEFILES := 
+# environment
+LC_MONETARY = en_US.UTF-8
+# environment
+MOTD_SHOWN = pam
+# automatic
+^F = $(notdir $^)
+# environment
+LC_TIME = en_US.UTF-8
+# environment
+VSCODE_LOG_NATIVE = false
+# environment
+LC_TELEPHONE = en_US.UTF-8
+# environment
+GDK_SCALE = 1
+# automatic
+?F = $(notdir $?)
+# environment
+KDE_APPLICATIONS_AS_SCOPE = 1
+# environment
+XDG_SEAT = seat0
+# environment
+XDG_CURRENT_DESKTOP = KDE
+# automatic
++F = $(notdir $+)
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+DESKTOP_SESSION = plasmawayland
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = KDE
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = icyjiub
+# makefile (from 'Makefile', line 25)
+EXE = .exe
+# environment
+XDG_VTNR = 2
+# makefile
+.DEFAULT_GOAL := all
+# environment
+SYSTEMD_EXEC_PID = 908
+# makefile (from 'Makefile', line 21)
+RM = rm
+# environment
+DISPLAY = :1
+# environment
+USER = icyjiub
+# default
+MAKE_VERSION := 4.3
+# environment
+KDE_SESSION_UID = 1000
+# makefile (from 'Makefile', line 8)
+LDFLAGS = `sdl2-config --libs --cflags`
+# environment
+QT_WAYLAND_FORCE_DPI = 96
+# makefile (from 'Makefile', line 24)
+DEL = del
+# environment
+LC_MEASUREMENT = en_US.UTF-8
+# environment
+DEBUGINFOD_URLS = https://debuginfod.archlinux.org 
+# environment
+XKB_DEFAULT_LAYOUT = us
+# environment
+_ = /usr/bin/make
+# environment
+LC_PAPER = en_US.UTF-8
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+GTK2_RC_FILES = /etc/gtk-2.0/gtkrc:/home/icyjiub/.gtkrc-2.0:/home/icyjiub/.config/gtkrc-2.0
+# environment
+HOME = /home/icyjiub
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-52ecbf4c-1.67.2-main.sock
+# makefile (from 'Makefile', line 13)
+SRCDIR = src
+# environment
+XDG_SESSION_ID = 1
+# environment
+XCURSOR_SIZE = 24
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
+# environment
+QT_AUTO_SCREEN_SCALE_FACTOR = 0
+# environment
+VSCODE_CLI = 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# makefile (from 'Makefile', line 7)
+CXXFLAGS = -std=c11 -Wall -g
+# environment
+KDE_SESSION_VERSION = 5
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
+# makefile (from 'Makefile', line 6)
+CC = gcc
+# environment
+KDE_FULL_SESSION = true
+# environment
+DOTNET_ROOT = /usr/share/dotnet
+# environment
+LC_IDENTIFICATION = en_US.UTF-8
+# variable set hash-table stats:
+# Load=128/1024=12%, Rehash=0, Collisions=12/194=6%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# src (device 38, inode 2712446): 9 files, no impossibilities.
+# . (device 38, inode 2712359): 15 files, no impossibilities.
+
+# 24 files, no impossibilities in 2 directories.
+
+# Implicit Rules
+
+%.d: src/%.c
+#  recipe to execute (from 'Makefile', line 40):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+obj/%.o: src/%.c
+#  recipe to execute (from 'Makefile', line 47):
+	$(CC) $(CXXFLAGS) -o $@ -c $<
+
+# 2 implicit rules, 0 (0.0%) terminal.
+# Files
+
+obj/dissasm.o: src/dissasm.c src/dissasm.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/dissasm.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-07 20:04:25.545498366
+#  File has been updated.
+#  Successfully updated.
+
+cleandepw:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 69):
+	$(DEL) $(DEP)
+
+# Not a target:
+src/inputSys.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-07 20:04:25.545498366
+#  File has been updated.
+#  Successfully updated.
+
+cleandep:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 58):
+	$(RM) $(DEP)
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-07 20:04:25.545498366
+#  File has been updated.
+#  Successfully updated.
+
+CPU.d: src/CPU.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'CPU'
+#  Last modified 2022-06-15 20:54:37.841416405
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 40):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 53):
+	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
+
+obj/CPU.o: src/CPU.c src/CPU.c src/CPU.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'CPU'
+#  Last modified 2022-06-07 21:15:03.809011007
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := obj/CPU.o
+# automatic
+# * := CPU
+# automatic
+# < := src/CPU.c
+# automatic
+# + := src/CPU.c src/CPU.c src/CPU.h
+# automatic
+# % := 
+# automatic
+# ^ := src/CPU.c src/CPU.h
+# automatic
+# ? := src/CPU.c
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=2/15=13%
+#  recipe to execute (from 'Makefile', line 47):
+	$(CC) $(CXXFLAGS) -o $@ -c $<
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: deadbeat
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+
+# Not a target:
+src/dissasm.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+inputSys.d: src/inputSys.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'inputSys'
+#  Last modified 2022-06-15 20:54:37.724750001
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 40):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+deadbeat.d: src/deadbeat.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'deadbeat'
+#  Last modified 2022-06-15 20:54:37.831416427
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 40):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+obj/deadbeat.o: src/deadbeat.c src/dissasm.h src/CPU.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+cleanw:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 64):
+	$(DEL) $(WDELOBJ) $(DEP) $(APPNAME)$(EXE)
+
+# Not a target:
+src/CPU.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-07 21:32:46.591340969
+#  File has been updated.
+#  Successfully updated.
+
+obj/inputSys.o: src/inputSys.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+deadbeat: obj/CPU.o obj/deadbeat.o obj/dissasm.o obj/inputSys.o
+#  Implicit rule search has not been done.
+#  Last modified 2022-06-07 21:15:04.145686952
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+#  recipe to execute (from 'Makefile', line 36):
+	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+
+dissasm.d: src/dissasm.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'dissasm'
+#  Last modified 2022-06-15 20:54:37.748083282
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 40):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+.PHONY: clean cleandep cleanw cleandepw
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/deadbeat.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-07 20:04:25.545498366
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src/CPU.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-07 20:04:25.545498366
+#  File has been updated.
+#  Successfully updated.
+
+# files hash-table stats:
+# Load=24/1024=2%, Rehash=0, Collisions=0/82=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 48 / storage = 438 B / avg = 9 B
+# current buf: size = 8162 B / used = 438 B / count = 48 / avg = 9 B
+
+# strcache performance: lookups = 106 / hit rate = 54%
+# hash-table stats:
+# Load=48/8192=1%, Rehash=0, Collisions=0/106=0%
+# Finished Make data base on Wed Jun 15 20:54:37 2022
+
+ 
