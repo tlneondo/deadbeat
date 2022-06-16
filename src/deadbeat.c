@@ -104,7 +104,7 @@ void runEmu(romPack * inputRom){
 
 
         //iterate the program counter
-        ch8CPU->PC += 2;
+        //ch8CPU->PC += 2;
         
         char c;
         scanf("%c",&c);

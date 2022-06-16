@@ -5,6 +5,8 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
     //int opbytes = 2;
     unsigned char * code = &codebuffer[state->PC];
 
+    uint8_t jumpFlag = 0;
+
     //easy guide
     //unsigned char A = (code[0] >> 4); //first nibble of first byte - also the letter of the Opcode
     //unsigned char B = (code[0] & 0x0f);
@@ -43,6 +45,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
 
             state->PC = 0; //clear 
             state->PC = ((uint16_t) dest[0] << 8) | dest[1];
+            jumpFlag = 1;
 
             free(dest);        
 
@@ -56,6 +59,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         case 0x03:{ //Skip if VX = NN
             if(state->V[(code[0] & 0x0f)] == code[1]){
                 state->PC += 2;
+                jumpFlag = 1;
             }
 
         }
@@ -63,6 +67,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         case 0x04:{ //Skip if VX != NN
            if(state->V[(code[0] & 0x0f)] != code[1]){
                 state->PC += 2;
+                jumpFlag = 1;
             }        
 
         }
@@ -70,6 +75,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         case 0x05:{ //skip if VX & VY are equal
            if(state->V[(code[0] & 0x0f)] == state->V[code[1] >> 4]){
                 state->PC += 2;
+                jumpFlag = 1;
             }        
 
         }
@@ -144,6 +150,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
 
             if(state->V[regX] != state->V[regY]){
                 state->PC += 1;
+                jumpFlag = 1;
             }
         }
         break;
@@ -154,7 +161,6 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
 
             state->I = 0; //clear 
             state->I = ((uint16_t) dest[0] << 8) | dest[1];
-
 
             free(dest);   
         }
@@ -167,6 +173,7 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
 
             state->PC = 0; //clear 
             state->PC = ((uint16_t) dest[0] << 8) | dest[1]; 
+            jumpFlag = 1;
 
             free(dest);
         }
@@ -189,12 +196,14 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
                 case 0x9E:{ //if(key() == Vx)
                     if(state->V[reg] == getKey()){
                         state->PC += 1;
+                        jumpFlag = 1;
                     }
                 }
                 break;
                 case 0xA1:{ //if(key() != Vx)
                     if(state->V[reg] != getKey()){
                         state->PC += 1;
+                        jumpFlag = 1;
                     }                
                 }
                 break;
@@ -268,7 +277,11 @@ void EmulateCh8(unsigned char * codebuffer, CPUstate * state){
         default:
         break;
     }
-        
+    
+    //if PC not manipulated, add 2 to PC to advance to next instruction
+    if(jumpFlag == 0){
+        state->PC += 2;
+    }
         
 }
 
